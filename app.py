@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, render_template_string
 import io
-from docxtpl import DocxTemplate
+from docx import Document  # Используем python-docx вместо docxtpl
 import os
 
 app = Flask(__name__)
@@ -38,8 +38,7 @@ def generate():
     experience = request.form.get('experience', 'Опыт работы')
     skills = request.form.get('skills', 'Навыки')
     
-    # Создаём простой DOCX в памяти, если нет файла шаблона
-    from docx import Document
+    # Создаём документ используя python-docx
     doc = Document()
     doc.add_heading('Резюме', 0)
     doc.add_paragraph(f'Имя: {name}')
@@ -60,4 +59,3 @@ def generate():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
-
